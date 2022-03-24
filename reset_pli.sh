@@ -70,6 +70,9 @@ sudo apt autoremove -y
 # Clean up any remaining folders 
 sudo rm -rf /usr/lib/postgresql/ && sudo rm -rf /var/lib/postgresql/ && sudo rm -rf /var/log/postgresql/ && sudo rm -rf /etc/postgresql/ && sudo rm -rf /etc/postgresql-common/
 
+# Remove the logroate file 'plugin-logs'
+sudo rm -rf /etc/logrotate.d/plugin-logs
+
 # Remove the POSTGRES install system account & group
 sudo userdel -r postgres && sudo groupdel postgres
 
