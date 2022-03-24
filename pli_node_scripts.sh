@@ -376,7 +376,7 @@ FUNC_LOGROTATE(){
     echo -e "${GREEN}#########################################################################${NC}"
     echo -e "${GREEN}## SETUP LOG ROTATE...${NC}"
     echo
-    cat <<EOF | sudo tee /etc/logrotate.d/plugin-logs
+    cat <<EOF | sudo tee /etc/logrotate.d/plugin-logs >/dev/null
 $HOME/logs/*.log
 $HOME/.plugin/*.jsonl
 $HOME/.cache/*.logf
@@ -395,6 +395,7 @@ invoke-rc.d rsyslog rotate >/dev/null 2>&1 || true
 endscript
 }
 EOF
+    echo -e "${GREEN}## LOGROTATE SETUP COMPLETE...${NC}"
     sleep 4s
 }    
 
