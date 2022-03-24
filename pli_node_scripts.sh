@@ -376,7 +376,7 @@ FUNC_LOGROTATE(){
     echo -e "${GREEN}#########################################################################${NC}"
     echo -e "${GREEN}## SETUP LOG ROTATE...${NC}"
     echo
-    sudo cat <<EOF > /etc/logrotate.d/plugin-logs
+    cat <<EOF | sudo tee /etc/logrotate.d/plugin-logs
 $HOME/logs/*.log
 $HOME/.plugin/*.jsonl
 $HOME/.cache/*.logf
