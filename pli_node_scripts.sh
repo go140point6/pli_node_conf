@@ -185,7 +185,7 @@ FUNC_NODE_DEPLOY(){
     echo -e "${GREEN}#########################################################################"
     echo -e "${GREEN}#########################################################################"
     echo -e "${GREEN}"
-    echo -e "${GREEN}                      Script Deployment menthod"
+    echo -e "${GREEN}                      Script Deployment method"
     echo -e "${GREEN}"
     echo -e "${GREEN}#########################################################################"
     echo -e "${GREEN}#########################################################################${NC}"
@@ -340,6 +340,7 @@ extendedKeyUsage=serverAuth) -subj "/CN=localhost"
 
     # NON-INTERACTIVE: Proceed with next stage of setup.
     FUNC_EXPORT_NODE_KEYS;
+    FUNC_LOGROTATE;
     FUNC_INITIATOR;
     }
 
@@ -369,7 +370,33 @@ sleep 4s
 }
 
 
-
+FUNC_LOGROTATE(){
+    FUNC_VARS;
+    echo
+    echo -e "${GREEN}#########################################################################${NC}"
+    echo -e "${GREEN}## SETUP LOG ROTATE...${NC}"
+    echo
+    sudo cat <<EOF > /etc/logrotate.d/plugin-logs
+$HOME/logs/*.log
+$HOME/.plugin/*.jsonl
+$HOME/.cache/*.logf
+{
+su $USER $USER
+rotate 10
+copytruncate
+daily
+missingok
+notifempty
+compress
+delaycompress
+sharedscripts
+postrotate
+invoke-rc.d rsyslog rotate >/dev/null 2>&1 || true
+endscript
+}
+EOF
+    sleep 4s
+}    
 
 
 
